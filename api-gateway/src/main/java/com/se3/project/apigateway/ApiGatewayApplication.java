@@ -20,12 +20,18 @@ public class ApiGatewayApplication {
 	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
 		return builder.routes()
-				.route(r -> r.path("/dump/**")
-						.filters(f -> f.rewritePath("^/dump", ""))
-						.uri("lb://DUMP-SERVICE"))
-				.route(r -> r.path("/user/**")
-						.filters(f -> f.rewritePath("^/user", ""))
+				.route(r -> r.path("/user-service/**")
+						.filters(f -> f.rewritePath("^/user-service", ""))
 						.uri("lb://USER-SERVICE"))
+				.route(r -> r.path("/reservation-service/**")
+						.filters(f -> f.rewritePath("^/reservation-service", ""))
+						.uri("lb://RESERVATION-SERVICE"))
+				.route(r -> r.path("/parking-lots-service/**")
+						.filters(f -> f.rewritePath("^/parking-lots-service", ""))
+						.uri("lb://PARKING-LOTS-SERVICE"))
+				.route(r -> r.path("/review-service/**")
+						.filters(f -> f.rewritePath("^/review-service", ""))
+						.uri("lb://REVIEW-SERVICE"))
 				.build();
 	}
 	@GetMapping("/service")
