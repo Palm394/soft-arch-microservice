@@ -10,15 +10,31 @@ spring:
     application:
         name: api-gateway
     cloud:
+        discovery:
+            enabled: true
         gateway:
-            route:
-                - id: dump-service
-                  uri: lb://DUMP-SERVICE
-                  predicates:
-                    - Path=/dump/**
+            logging:
+                level:
+                    org.springframework.cloud.gateway: TRACE
+                    reactor.netty.http.client: TRACE
             discovery:
                 locator:
                     enabled: true
+            global cors:
+                corsConfigurations:
+                    '[/**]':
+                        allowedOrigins: "http://localhost:3000"
+                        allowedHeaders: "*"
+                        allowedMethods: "*"
+                preflight:
+                    pass through:true
+#            routes:
+#                - id: user_route
+#                  uri: lb://user-service
+#                  predicates:
+#                      - Path=/user-service/**
+#                  filters:
+#                      - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
 management:
     endpoints:
         web:

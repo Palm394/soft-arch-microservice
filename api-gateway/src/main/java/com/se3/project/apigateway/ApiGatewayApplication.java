@@ -7,7 +7,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,22 +20,26 @@ public class ApiGatewayApplication {
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
 		return builder.routes()
 				.route(r -> r.path("/user-service/**")
-						.filters(f -> f.rewritePath("^/user-service", ""))
+						.filters(f -> f
+								.rewritePath("^/user-service", "")
+								.dedupeResponseHeader("Access-Control-Allow-Origin","RETAIN_UNIQUE"))
 						.uri("lb://USER-SERVICE"))
 				.route(r -> r.path("/reservation-service/**")
-						.filters(f -> f.rewritePath("^/reservation-service", ""))
+						.filters(f -> f
+								.rewritePath("^/reservation-service", "")
+								.dedupeResponseHeader("Access-Control-Allow-Origin","RETAIN_UNIQUE"))
 						.uri("lb://RESERVATION-SERVICE"))
 				.route(r -> r.path("/parking-lots-service/**")
-						.filters(f -> f.rewritePath("^/parking-lots-service", ""))
+						.filters(f -> f
+								.rewritePath("^/parking-lots-service", "")
+								.dedupeResponseHeader("Access-Control-Allow-Origin","RETAIN_UNIQUE"))
 						.uri("lb://PARKING-LOTS-SERVICE"))
 				.route(r -> r.path("/review-service/**")
-						.filters(f -> f.rewritePath("^/review-service", ""))
+						.filters(f -> f
+								.rewritePath("^/review-service", "")
+								.dedupeResponseHeader("Access-Control-Allow-Origin","RETAIN_UNIQUE"))
 						.uri("lb://REVIEW-SERVICE"))
 				.build();
-	}
-	@GetMapping("/service")
-	public String dump() throws Exception {
-		return "dumP";
 	}
 
 	public static void main(String[] args) {
