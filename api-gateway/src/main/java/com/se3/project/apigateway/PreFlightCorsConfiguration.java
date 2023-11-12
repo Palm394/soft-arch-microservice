@@ -22,6 +22,7 @@ public class PreFlightCorsConfiguration {
         CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
         config.addAllowedMethod(HttpMethod.PUT);
         config.addAllowedMethod(HttpMethod.POST);
+        config.addAllowedMethod(HttpMethod.PATCH);
         config.addAllowedMethod(HttpMethod.DELETE);
         source.registerCorsConfiguration("/**", config);
         return source;

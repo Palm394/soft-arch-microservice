@@ -22,22 +22,30 @@ public class ApiGatewayApplication {
 				.route(r -> r.path("/user-service/**")
 						.filters(f -> f
 								.rewritePath("^/user-service", "")
-								.dedupeResponseHeader("Access-Control-Allow-Origin","RETAIN_UNIQUE"))
+								.dedupeResponseHeader("Access-Control-Allow-Origin","RETAIN_UNIQUE")
+								.dedupeResponseHeader("Access-Control-Allow-Credentials", "RETAIN_FIRST")
+						)
 						.uri("lb://USER-SERVICE"))
 				.route(r -> r.path("/reservation-service/**")
 						.filters(f -> f
 								.rewritePath("^/reservation-service", "")
-								.dedupeResponseHeader("Access-Control-Allow-Origin","RETAIN_UNIQUE"))
+								.dedupeResponseHeader("Access-Control-Allow-Origin","RETAIN_UNIQUE")
+								.dedupeResponseHeader("Access-Control-Allow-Credentials", "RETAIN_FIRST")
+						)
 						.uri("lb://RESERVATION-SERVICE"))
 				.route(r -> r.path("/parking-lots-service/**")
 						.filters(f -> f
 								.rewritePath("^/parking-lots-service", "")
-								.dedupeResponseHeader("Access-Control-Allow-Origin","RETAIN_UNIQUE"))
+								.dedupeResponseHeader("Access-Control-Allow-Origin","RETAIN_UNIQUE")
+								.dedupeResponseHeader("Access-Control-Allow-Credentials", "RETAIN_FIRST")
+						)
 						.uri("lb://PARKING-LOTS-SERVICE"))
 				.route(r -> r.path("/review-service/**")
 						.filters(f -> f
 								.rewritePath("^/review-service", "")
-								.dedupeResponseHeader("Access-Control-Allow-Origin","RETAIN_UNIQUE"))
+								.dedupeResponseHeader("Access-Control-Allow-Origin","RETAIN_UNIQUE")
+								.dedupeResponseHeader("Access-Control-Allow-Credentials", "RETAIN_FIRST")
+						)
 						.uri("lb://REVIEW-SERVICE"))
 				.build();
 	}
